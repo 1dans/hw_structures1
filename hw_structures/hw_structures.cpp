@@ -7,6 +7,19 @@
 
 using namespace std;
 
+//typedef struct { //2
+//	string engine, color;
+//	int ownersAmount;
+//} Desc;
+//
+//typedef struct { //2
+//	Desc desc;
+//	string firm, model;
+//	int year;
+//	float price;
+//	bool bargain;
+//} Car;
+//
 //typedef struct { //1
 //	string name;
 //	int guarantee;
@@ -25,11 +38,14 @@ using namespace std;
 //		file << monitors[i].name << ' ' << monitors[i].guarantee << ' ' << monitors[i].price << endl;
 //	}
 //	file.close();
-//	cout << "Роботу завершено" << endl;
+//	cout << "Запис у файл завершено" << endl;
 //
 //}
-
-void readFile(string fileName) {
+//
+void readFile(string fileName) { //всі
+	int lineLen, spaceLen=10;
+	if (fileName == "car.txt") lineLen = 8; 
+	else lineLen = 3;
 	ifstream file(fileName);
 	if (!file) {
 		cout << "Помилка відкриття файлу" << endl;
@@ -39,14 +55,17 @@ void readFile(string fileName) {
 	int i = 0;
 	while (file >> word)
 	{
-		if (i == 3) { cout << endl; i = 0; }
-		cout << setw(13) << left << word;
+		if (i == lineLen) { cout << endl; i = 0; }
+		cout << setw(spaceLen) << left << word;
 		i++;
 	}
 	file.close();
-	cout << "Роботу завершено" << endl;
+	cout << "\nРоботу з файлом завершено\n";
 }
 
+//void writeToFile(string fileName, vector<Car> cars); //2
+//void fillArrayCars(); //2
+//
 //void fillArrayMonitors() //1
 //{
 //	string name;
@@ -88,14 +107,66 @@ void readFile(string fileName) {
 //	if(ans==1) writeToFile("monitors.txt", monitors);
 //	cout << "Чи хотіли б ви побачити дані, збережені в файлі? 1 - так, 0 - ні\n";
 //	cin >> ans;
-//	if (ans == 1) {
-//		cout << setw(10) << left << "Монітори" << setw(15) << left << "Гарантія(міс)" << setw(10) << left << "Ціни"<<endl;
-//		readFile("monitors.txt");
-//	}
+//	if (ans == 1) readFile("monitors.txt");
 //}
 
 int main()
 {
 	system("chcp 1251>null");
     //fillArrayMonitors(); //1
+	//fillArrayCars(); //2
+	return 0;
 }
+
+//void writeToFile(string fileName, vector<Car> cars) //2
+//{
+//	ofstream file(fileName, ios::app);
+//	if (!file) {
+//		cout << "Помилка відкриття файлу" << endl;
+//		return;
+//	}
+//
+//	for (int i = 0; i < cars.size(); ++i)
+//	{
+//		file << cars[i].firm << ' ' << cars[i].model << ' ' << cars[i].year << ' ' << cars[i].price << ' ' << cars[i].bargain << ' ' << cars[i].desc.color << ' ' << cars[i].desc.engine << ' ' << cars[i].desc.ownersAmount << endl;
+//	}
+//	file.close();
+//	cout << "Запис у файл завершено" << endl;
+//
+//}
+//
+//void fillArrayCars() //2
+//{
+//	Desc desc;
+//	string firm, model;
+//	int year;
+//	float price;
+//	bool bargain;
+//	vector<Car> cars;
+//	cout << "Не вводіть нічого в полі 'фірма', якщо хочете зупинити." << endl;
+//	while (true)
+//	{
+//		cout << "Введіть фірму авто: ";
+//		getline(cin, firm);
+//		if (firm == "") break;
+//		cout << "Введіть модель: ";
+//		getline(cin, model);
+//		cout << "Введіть колір: ";
+//		getline(cin, desc.color);
+//		cout << "Введіть двигун авто: ";
+//		getline(cin, desc.engine);
+//		cout << "Введіть кількість власників: ";
+//		cin >> desc.ownersAmount;
+//		cout << "Введіть рік випуску: ";
+//		cin >> year;
+//		cout << "Введіть ціну: ";
+//		cin >> price;
+//		cout << "Чи є можливість торгу? 1 - так, 0 - ні\n";
+//		cin >> bargain;
+//		Car car = { desc, firm, model, year, price, bargain };
+//		cars.push_back(car);
+//		cin.ignore();
+//	}
+//	writeToFile("car.txt", cars);
+//	readFile("car.txt");
+//}
