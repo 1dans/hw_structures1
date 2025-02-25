@@ -7,6 +7,12 @@
 
 using namespace std;
 
+typedef struct {
+	string surname;
+	char gender;
+	double averageMark;
+} Student;
+
 //typedef struct { //2
 //	string engine, color;
 //	int ownersAmount;
@@ -63,6 +69,9 @@ void readFile(string fileName) { //всі
 	cout << "\nРоботу з файлом завершено\n";
 }
 
+void fillArrayStudents(); //3
+void findHigherAverageMark(vector<Student> students); //3
+
 //void writeToFile(string fileName, vector<Car> cars); //2
 //void fillArrayCars(); //2
 //
@@ -115,6 +124,7 @@ int main()
 	system("chcp 1251>null");
     //fillArrayMonitors(); //1
 	//fillArrayCars(); //2
+	fillArrayStudents(); //3
 	return 0;
 }
 
@@ -170,3 +180,47 @@ int main()
 //	writeToFile("car.txt", cars);
 //	readFile("car.txt");
 //}
+
+void fillArrayStudents() { //3
+	string surname;
+	char gender = ' ';
+	double averageMark;
+	vector<Student> students;
+	cout << "Залиште поле 'прізвище' порожнім, якщо хочете зупинити введення." << endl;
+	while (true) {
+		cout << "Прізвище студента: ";
+		getline(cin, surname);
+		if (surname == "") break;
+		cout << "Стать (M/W, Ж/Ч): ";
+		cin>>gender;
+		cout << "Середній бал: ";
+		cin >> averageMark;
+		Student student = { surname, gender, averageMark };
+		students.push_back(student);
+		cin.ignore();
+	}
+	findHigherAverageMark(students);
+}
+
+void findHigherAverageMark(vector<Student> students)
+{
+	int countW = 0, countM = 0;
+	double averageW = 0, averageM = 0, marksW = 0, marksM = 0;
+	for (auto i : students)
+	{
+		if (i.gender == 'w' || i.gender == 'W' || i.gender=='Ж' || i.gender=='ж')
+		{
+			countW++;
+			marksW += i.averageMark;
+		}
+		else
+		{
+			countM++;
+			marksM += i.averageMark;
+		}
+	}
+	averageW = marksW / countW;
+	averageM = marksM / countM;
+	cout << "Більший середній бал у " << ((averageM > averageW) ? "чоловіків" : "жінок") << endl;
+	cout << "Середній бал жінок: " << averageW << ". Середній бал чоловіків: " << averageM << endl;
+}
